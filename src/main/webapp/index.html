@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+   <script type="text/javascript">
+   var obj=null;
+   function ajaxoutput() {
+		if(obj.readyState==4 && obj.status==200){
+			document.getElementById("divresult")
+			.innerHTML=obj.responseText;
+		}
+	}
+   
+	// fetch all available
+	function fetchallavailable(){
+		obj=new XMLHttpRequest();
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("GET", "CellphonefetchAvailableservlet", true);
+		obj.send(); 
+	//	alert("fetch call made");
+	}
+	// fetch all sold 
+	function fetchcellphone(){
+		obj=new XMLHttpRequest();
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("GET", "cellphonehttpservlet", true);
+		obj.send(); 
+	//	alert("ajax call made");
+	}
+	// sold query of mobile shop
+	function Sold(mobileid) {
+		obj=new XMLHttpRequest();
+		
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("GET","SoldHttpservlet1?mobileid="+mobileid,true);
+		//obj.setRequestHeader("content-type","application/x-www-form-urlencoded");
+		obj.send();
+	//	alert("sold called");
+	}
+	
+	// insert query in mobile shop
+	function insert() {
+		obj=new XMLHttpRequest();
+		var brandname=document.form1.brandname.value;
+		var modelname=document.form1.modelname.value;
+		var ram=document.form1.ram.value;
+		var rom=document.form1.rom.value;
+		var processor=document.form1.processor.value;
+		var buydate=document.form1.buydate.value;
+		var purchaseprice=document.form1.purchaseprice.value;
+		var str="brandname="+brandname+"&modelname="+modelname+"&ram="+ram+"&rom="+rom+"&processor="+
+		processor+"&buydate="+buydate+"&purchaseprice="+purchaseprice;
+		
+		alert (str)
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("POST","cellphoneinserthttpservlet",true);
+		obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		obj.send(str);
+	//	alert("insert called");
+	}
+	// insert data of new cellphone
+	function newinsert() {
+ 		obj=new XMLHttpRequest();
+		
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("GET","newinsertcellphone.html",true);
+		obj.send();
+	//	alert(" new insert called");
+	}
+	// sell recored call
+	function SoldRecored() {
+		obj=new XMLHttpRequest();
+		var mobileid=document.soldservlet.mobileid.value;
+		var selldate=document.soldservlet.selldate.value;
+		var coustomername=document.soldservlet.coustomername.value;
+		var coustomeraddress=document.soldservlet.coustomeraddress.value;
+		var coustomermobileno=document.soldservlet.coustomermobileno.value;
+		var sellprice=document.soldservlet.sellprice.value;
+		var str="mobileid="+mobileid+"&selldate="+selldate+"&coustomername="+coustomername+
+		"&coustomeraddress="+coustomeraddress+"&coustomermobileno="+coustomermobileno+
+		"&sellprice="+sellprice;
+		alert(str);
+		obj.onreadystatechange=ajaxoutput;
+		
+		obj.open("POST","Soldhttpservlet", true);
+		obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		obj.send(str);
+		
+	}
+	// function of delete 
+	function functiondelete(mobileid) {
+		alert("Delete Mobileid="+mobileid);
+		var str="mobileid= "+mobileid;
+		obj=new XMLHttpRequest();
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("GET","Deletehttpservlet?mobileid="+mobileid, true);
+		obj.send();
+	}
+	// function available update by id 
+	function updateid(mobileid) {
+		obj=new XMLHttpRequest();
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("GET","updateidservlet?mobileid="+mobileid,true);
+		obj.send();
+	//	alert("update id called");
+	}
+	// function available update 
+	function updateRecored() {
+		obj=new XMLHttpRequest();
+		var mobileid=document.update1.mobileid.value;
+		var brandname=document.update1.brandname.value;
+		var modelname=document.update1.modelname.value;
+		var ram=document.update1.ram.value;
+		var rom=document.update1.rom.value;
+		var processor=document.update1.processor.value;
+		var buydate=document.update1.buydate.value;
+		var purchaseprice=document.update1.purchaseprice.value;
+		var str="mobileid="+mobileid+"&brandname="+brandname+"&modelname="+modelname+
+		"&ram="+ram+"&rom="+rom+"&processor="+processor+"&buydate="+buydate+"&purchaseprice="+purchaseprice;
+		alert(str);
+		obj.onreadystatechange=ajaxoutput;
+		
+		obj.open("POST","updateservlet", true);
+		obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		obj.send(str);
+		
+	}
+	// function sold update by id
+	function sellupdateid(mobileid) {
+		obj=new XMLHttpRequest();
+		obj.onreadystatechange=ajaxoutput;
+		obj.open("GET","UpdateSoldidServlet?mobileid="+mobileid,true);
+		obj.send();
+	//	alert("update sell id called");
+	}
+	// function update sold data
+	function sellupdate() {
+		obj=new XMLHttpRequest();
+		var mobileid=document.soldupdate1.mobileid.value;
+		var brandname=document.soldupdate1.brandname.value;
+		var modelname=document.soldupdate1.modelname.value;
+		var ram=document.soldupdate1.ram.value;
+		var rom=document.soldupdate1.rom.value;
+		var processor=document.soldupdate1.processor.value;
+		var buydate=document.soldupdate1.buydate.value;
+		var purchaseprice=document.soldupdate1.purchaseprice.value;
+		var selldate=document.soldupdate1.selldate.value;
+		var coustomername=document.soldupdate1.coustomername.value;
+		var coustomeraddress=document.soldupdate1.coustomeraddress.value;
+		var coustomermobileno=document.soldupdate1.coustomermobileno.value;
+		var sellprice=document.soldupdate1.sellprice.value;
+		var str="mobileid="+mobileid+"&brandname="+brandname+"&modelname="+modelname+
+		"&ram="+ram+"&rom="+rom+"&processor="+processor+"&buydate="+buydate+
+		"&purchaseprice="+purchaseprice+"&selldate="+selldate+"&coustomername="+coustomername
+		+"&coustomeraddress="+coustomeraddress+"&sellprice="+sellprice
+		+"&coustomermobileno="+coustomermobileno;
+		alert(str);
+		obj.onreadystatechange=ajaxoutput;
+		
+		obj.open("POST","UpdateSoldservlet", true);
+		obj.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		obj.send(str);
+	}
+   </script>
+   <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>Mobile Shop</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- bootstrap css -->
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+      <!-- style css -->
+      <link rel="stylesheet" href="css/style.css">
+      <!-- Responsive-->
+      <link rel="stylesheet" href="css/responsive.css">
+      <!-- fevicon -->
+      <link rel="icon" href="images/fevicon.png" type="image/gif" />
+      <!-- Scrollbar Custom CSS -->
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <!-- Tweaks for older IEs-->
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+   		<style>
+   		
+   		#footer{
+   			position: fixed;
+   			bottom: 0;
+   			width: 100%;
+   			background: #f4f4f4;
+   			display: flex;
+   			justify-content: center;
+   			align-items: center;
+			   			
+   		}
+   		body {
+			background-image: url("images/project1.jpg");
+   			background-size: cover;
+   			font-size: 16px;
+   			color: #000;
+   			background-repeat: no-repeat;
+}
+		#divresult {
+			padding: 0 20px 60px 20px;
+		}
+		.text p{
+			font-weight: 500;
+		 	font-size: 20px;
+		}
+		
+   		</style>
+   </head>
+   <!-- body -->
+   <body class="main-layout">
+      <!-- loader  -->
+      <div class="loader_bg">
+         <div class="loader"><img src="images/loading.gif" alt="#" /></div>
+      </div>
+      <!-- end loader -->  
+      <!-- header -->
+      <header>
+         <!-- header inner -->
+         <div class="header">
+         <div class="container">
+            <div class="row">
+               <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col logo_section">
+                  <div class="full">
+                     <div class="center-desk">
+                        <div class="logo"> <a href="index.html">Cellphone</a> </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9">
+                  <div class="menu-area">
+                     <div class="limit-box">
+                        <nav class="main-menu">
+                           <ul class="menu-area-main">
+                              <li class="active"> <a href="index.html">Home</a> </li>
+                              <li> <a href="#" onclick="newinsert();">Purchase</a> </li>
+                              <li> <a href="#about" onclick="fetchallavailable();">Fetch Available data</a> </li>
+                              <li> <a href="#service" onclick="fetchcellphone();"> Fetch Sold data</a> </li>
+                              </ul>
+                        </nav>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         </div>
+        <div class="text">
+        	<h2 class="h2">Mobile shop management system</h2>
+        	<p>This is web-site for mobile details.
+        	like purchase, sale, fetch available data, fetch sale data. </p>
+        </div>
+         <!-- end header inner --> 
+      </header>
+		 
+      <div id="divresult"></div>
+ 
+		<div id="footer">
+			<p>Designed and Developed by MOHAMMAD FURQAN 
+			
+				&copy; Copyright MECAPS </p>
+		</div> 
+      <!-- Javascript files--> 
+      <script src="js/jquery.min.js"></script> 
+      <script src="js/popper.min.js"></script> 
+      <script src="js/bootstrap.bundle.min.js"></script> 
+      <script src="js/jquery-3.0.0.min.js"></script> 
+      <script src="js/plugin.js"></script> 
+      <!-- sidebar --> 
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script> 
+      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+      <script src="js/custom.js"></script>
+      <script>
+         $(document).ready(function(){
+         $(".fancybox").fancybox({
+         openEffect: "none",
+         closeEffect: "none"
+         });
+         
+         $(".zoom").hover(function(){
+         
+         $(this).addClass('transition');
+         }, function(){
+         
+         $(this).removeClass('transition');
+         });
+         });
+         
+      </script> 
+   </body>
+</html>
