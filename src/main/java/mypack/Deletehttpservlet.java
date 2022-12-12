@@ -19,7 +19,7 @@ public class Deletehttpservlet extends HttpServlet {
 		Delete(req, resp);
 	}
 	void Delete(HttpServletRequest req, HttpServletResponse res)
-	throws ServletException,IOException{
+			throws ServletException,IOException{
 		res.setContentType("text/html");
 		PrintWriter out=res.getWriter();
 		out.println("<br>");

@@ -32,7 +32,7 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 					" where currentstatus= 'Available'";
 			Statement stmt=con.createStatement();
 			ResultSet rs=stmt.executeQuery(query);
-			res="<table border='1' align='center'>";
+			res="<div class='mydivf'><table border='1' align='center'>";
 			res+="<tr>";
 			res+="<th>Mobile ID</th>"+
 					"<th>Brand Name</th>"+
@@ -42,7 +42,11 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 					"<th>Processor</th>"+
 					"<th>Buy date</th>"+
 					"<th>Purchase Price</th>"+
-					"<th>currentstatus</th>";
+					"<th>Currentstatus</th>"+
+					"<th>Delete</th>"+
+					"<th>Sell</th>"+
+					"<th>Update</th>";
+			
 			res+="</tr>";
 			while(rs.next()==true) {
 				res+="<tr>";
@@ -72,7 +76,7 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 			
 			rs.close();
 			stmt.close();
-			res+="</table>";
+			res+="</table></div>";
 		}
 		catch(Exception e) {
 			res="<br>"+e.toString();
@@ -90,7 +94,7 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 					" where currentstatus= 'Sold'";
 			Statement stmt=con.createStatement();
 			ResultSet rs=stmt.executeQuery(query);
-			res="<table border='1' align='center'>";
+			res="<div class='mydivf'><table border='1' align='center'>";
 			res+="<tr>";
 			res+="<th>Mobile ID</th>"+
 					"<th>Brand Name</th>"+
@@ -101,11 +105,12 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 					"<th>Buy date</th>"+
 					"<th>Purchase Price</th>"+
 					"<th>Sell date</th>"+
-					"<th>coustomer name</th>"+
-					"<th>coustomer address</th>"+
-					"<th>coustomer mobileno</th>"+
-					"<th>sell price</th>"+
-					"<th>currentstatus</th>";
+					"<th>Coustomer name</th>"+
+					"<th>Coustomer address</th>"+
+					"<th>Coustomer mobileno</th>"+
+					"<th>Sell price</th>"+
+					"<th>Currentstatus</th>"+
+					"<th>Update</th>";
 			res+="</tr>";
 			while(rs.next()==true) {
 				res+="<tr>";
@@ -143,7 +148,7 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 			
 			rs.close();
 			stmt.close();
-			res+="</table>";
+			res+="</table></div>";
 		}
 		catch(Exception e) {
 			res=e.toString();
@@ -248,14 +253,93 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 		String res="";
 		try {
 			this.openconnection();
-			String query="delete from mobile_shop"+
+			String query="update mobile_shop set "+
+			" currentstatus='Close' "+
 			" where mobileid=? ";
 			PreparedStatement ps=con.prepareStatement(query);
 			ps.setInt(1, mobileid);
 			int result=ps.executeUpdate();
-			res=result+" Record deleted form Mobile_shop table";
+			res=result+" Record deleted form Mobile_shop";
 			ps.close();
 			
+		}
+		catch(Exception e) {
+			res="<br>"+e.toString();
+		}
+		return res;
+	}
+	// fetchdelete function
+	@Override
+	public String fetchdelete() {
+		// TODO Auto-generated method stub
+		String res="";
+		try {
+			this.openconnection();
+			String query="select * from mobile_shop"+
+					" where currentstatus= 'Close'";
+			Statement stmt=con.createStatement();
+			ResultSet rs=stmt.executeQuery(query);
+			res="<div class='mydivf'><table border='1' align='center'>";
+			res+="<tr>";
+			res+="<th>Mobile ID</th>"+
+					"<th>Brand Name</th>"+
+					"<th>Model Name</th>"+
+					"<th>RAM</th>"+
+					"<th>ROM</th>"+
+					"<th>Processor</th>"+
+					"<th>Buy date</th>"+
+					"<th>Purchase Price</th>"+
+					"<th>Currentstatus</th>"+
+					"<th>Repurchase</th>";
+			res+="</tr>";
+			while(rs.next()==true) {
+				res+="<tr>";
+				String mobileid=rs.getString("mobileid");
+				String brandname=rs.getString("brandname");
+				String modelname=rs.getString("modelname");
+				String ram=rs.getString("ram");
+				String rom=rs.getString("rom");
+				String processor=rs.getString("Processor");
+				String buydate=rs.getString("buydate");
+				String purchaseprice=rs.getString("purchaseprice");
+				String currentstatus=rs.getString("currentstatus");
+				res+="<td>"+mobileid+"</td>"+
+						"<td>"+brandname+"</td>"+
+						"<td>"+modelname+"</td>"+
+						"<td>"+ram+"</td>"+
+						"<td>"+rom+"</td>"+
+						"<td>"+processor+"</td>"+
+						"<td>"+buydate+"</td>"+
+						"<td>"+purchaseprice+"</td>"+
+						"<td>"+currentstatus+"</td>"+
+						"<td><a href='#' onclick='return functionrepurchase("+mobileid+")'>Repurchase</a></td>";
+						res+="</tr>";
+			}
+			
+			rs.close();
+			stmt.close();
+			res+="</table></div>";
+		}
+		catch(Exception e) {
+			res="<br>"+e.toString();
+		}
+		return res;
+	}
+	// call to repurchase of delete items
+	@Override
+	public String repurchase(int mobileid) {
+		// TODO Auto-generated method stub
+		String res=""; 
+		try {
+			this.openconnection();
+		String query="update mobile_shop set "+
+		" currentstatus='Available' "+
+				" where mobileid=? ";
+		PreparedStatement ps=con.prepareStatement(query);
+		ps.setInt(1, mobileid);
+		int result=ps.executeUpdate();
+		res=result+" Record repurchase form Mobile_shop";
+		ps.close();
 		}
 		catch(Exception e) {
 			res="<br>"+e.toString();
@@ -409,5 +493,5 @@ public class CellphoneDAOImpl implements CellphoneDAO {
 		}
 		return res;
 	}
-
+	
 }

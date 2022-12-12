@@ -10,8 +10,11 @@ public interface CellphoneDAO {
 
 	String[] fetchbyid(int mobileid);	
 	String sold(Cellphone cellphone);
-	
+	 
 	String delete(int mobileid);
+	String repurchase(int mobileid);
+	
+	String fetchdelete();
 	
 	String[] updatebyid(int mobileid);
 	String updatecellphone(Cellphone cellphone);
